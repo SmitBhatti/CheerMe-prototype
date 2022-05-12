@@ -29,7 +29,23 @@ const waitForTransaction = async (promise: Promise<string>) => {
     return receipt;
 };
 
-const customMint = async()  => {
+
+
+const Inventory = ({client, link, wallet}: InventoryProps) => {
+  const [newTokenId, setNewTokenId] = useState(0);
+  const [inventory, setInventory] = useState<ImmutableMethodResults.ImmutableGetAssetsResult>(Object);
+  // minting
+  const [mintTokenId, setMintTokenId] = useState('');
+  const [mintBlueprint, setMintBlueprint] = useState('');
+  const [mintTokenIdv2, setMintTokenIdv2] = useState('');
+  const [mintBlueprintv2, setMintBlueprintv2] = useState('');
+
+  // buying and selling
+  const [sellAmount, setSellAmount] = useState('');
+  const [sellTokenId, setSellTokenId] = useState('');
+  const [sellTokenAddress, setSellTokenAddress] = useState('');
+  const [sellCancelOrder, setSellCancelOrder] = useState('');
+  const customMint = async()  => {
     const mintToWallet = '0x4e4AeE29CdA60A41AaA897A86dA081B5e38E969B'; // eth wallet public address which will receive the token
     const signer = new Wallet("3a541ca594c3905b4ca7a25c84be74c1d9356f21c2e211995fd0604647e87ec2").connect(provider);
 
@@ -53,6 +69,8 @@ const customMint = async()  => {
       console.info(component, 'Waiting for minter registration...');
       await waitForTransaction(Promise.resolve(registerImxResult.tx_hash));
     }
+   
+   
 
     const result = await minter.mint({
       mints: [
@@ -62,7 +80,7 @@ const customMint = async()  => {
             type: MintableERC721TokenType.MINTABLE_ERC721,
             data: {
                 tokenAddress: "0x3E75F5F6F7D87Ed13B24F2a982e5FFfd3ab92de2", // address of token
-                id: '1', // must be a unique uint256 as a string
+                id: `${newTokenId}`, // must be a unique uint256 as a string
                 blueprint: 'metadata', // metadata can be anything but your L1 contract must parse it on withdrawal from the blueprint format '{tokenId}:{metadata}'
             },
           }],
@@ -85,20 +103,14 @@ const customMint = async()  => {
     },
   ]);
 }
+const GetTokenId = () =>{
+  const options = {method: 'GET', headers: {Accept: 'application/json'}};
 
-const Inventory = ({client, link, wallet}: InventoryProps) => {
-  const [inventory, setInventory] = useState<ImmutableMethodResults.ImmutableGetAssetsResult>(Object);
-  // minting
-  const [mintTokenId, setMintTokenId] = useState('');
-  const [mintBlueprint, setMintBlueprint] = useState('');
-  const [mintTokenIdv2, setMintTokenIdv2] = useState('');
-  const [mintBlueprintv2, setMintBlueprintv2] = useState('');
-
-  // buying and selling
-  const [sellAmount, setSellAmount] = useState('');
-  const [sellTokenId, setSellTokenId] = useState('');
-  const [sellTokenAddress, setSellTokenAddress] = useState('');
-  const [sellCancelOrder, setSellCancelOrder] = useState('');
+  fetch('https://api.ropsten.x.immutable.com/v1/mints?token_address=0x3E75F5F6F7D87Ed13B24F2a982e5FFfd3ab92de2', options)
+    .then(response => response.json())
+    .then(response => setNewTokenId(parseInt(response?.result[0]?.token?.data?.token_id)+1))
+    .catch(err => console.error(err));
+}
 
   useEffect(() => {
     load()
@@ -106,6 +118,7 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
 
   async function load(): Promise<void> {
     setInventory(await client.getAssets({user: wallet, sell_orders: true}))
+    GetTokenId()
   };
 
   // sell an asset
@@ -242,6 +255,7 @@ async function mintv2() {
           <input type="text" value={mintBlueprint} onChange={e => setMintBlueprint(e.target.value)} />
         </label>
         <button onClick={mint}>Mint</button>
+        <button onClick={GetTokenId}>GetTokenId</button>
       </div>
       <div>
         MintV2 - with Royalties NFT:
@@ -288,8 +302,9 @@ async function mintv2() {
       <br/><br/><br/>
       <div>
         Inventory:
+        <button onClick={burntoken}>Burn token</button>
         {JSON.stringify(inventory.result)}
-        <button onClick={burntoken}>MintV3</button>
+        
       </div>
     </div>
   );
