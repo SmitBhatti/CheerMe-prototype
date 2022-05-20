@@ -40,13 +40,20 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
   const [mintTokenIdv2, setMintTokenIdv2] = useState('');
   const [mintBlueprintv2, setMintBlueprintv2] = useState('');
 
+  //transfer
+  const [transferTokenId, setTransferTokenId] = useState('');
+  const [transferTokenAddress, setTransferTokenAddress] = useState('');
+  const [transferToAddress, setTransferToAddress] = useState('');
+
+
   // buying and selling
   const [sellAmount, setSellAmount] = useState('');
   const [sellTokenId, setSellTokenId] = useState('');
   const [sellTokenAddress, setSellTokenAddress] = useState('');
   const [sellCancelOrder, setSellCancelOrder] = useState('');
+
   const customMint = async()  => {
-    const mintToWallet = '0x4e4AeE29CdA60A41AaA897A86dA081B5e38E969B'; // eth wallet public address which will receive the token
+    const mintToWallet = '0x3553f4D4F603b5a3891907365D6324712005a694'; // eth wallet public address which will receive the token
     const signer = new Wallet("3a541ca594c3905b4ca7a25c84be74c1d9356f21c2e211995fd0604647e87ec2").connect(provider);
 
     const minter = await ImmutableXClient.build({
@@ -72,27 +79,23 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
    
    
 
-    const result = await minter.mint({
-      mints: [
-        {
-          etherKey: mintToWallet.toLowerCase(),
-          tokens: [{
-            type: MintableERC721TokenType.MINTABLE_ERC721,
-            data: {
-                tokenAddress: "0x3E75F5F6F7D87Ed13B24F2a982e5FFfd3ab92de2", // address of token
-                id: `${newTokenId}`, // must be a unique uint256 as a string
-                blueprint: 'metadata', // metadata can be anything but your L1 contract must parse it on withdrawal from the blueprint format '{tokenId}:{metadata}'
-            },
-          }],
-          nonce: '1',
-          authSignature: '', // Leave empty
-        },
-      ],
-    });
-    console.log(result);
+    const result = await minter.mintV2([
+      {
+        contractAddress: "0x3E75F5F6F7D87Ed13B24F2a982e5FFfd3ab92de2", // address of token
+        users: [
+          {
+            etherKey: mintToWallet,
+            tokens: [{
+              id: `${newTokenId}`,
+              blueprint: 'metadata'
+            }]
+          }]
+      }
+    ]);
+    console.log("Minter result",result);
   }
 
-  const burntoken = async() => {
+const burntoken = async() => {
     const link = new Link('https://link.ropsten.x.immutable.com');
   await link.transfer([
     {
@@ -103,12 +106,34 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
     },
   ]);
 }
+
+const transferToken = async() => {
+  const link = new Link('https://link.ropsten.x.immutable.com');
+  await link.transfer([
+  {
+    type: ERC721TokenType.ERC721,
+    tokenId: transferTokenId,
+    tokenAddress: transferTokenAddress,
+    toAddress: transferToAddress,
+  },
+  ]);
+}
 const GetTokenId = () =>{
   const options = {method: 'GET', headers: {Accept: 'application/json'}};
 
   fetch('https://api.ropsten.x.immutable.com/v1/mints?token_address=0x3E75F5F6F7D87Ed13B24F2a982e5FFfd3ab92de2', options)
     .then(response => response.json())
-    .then(response => setNewTokenId(parseInt(response?.result[0]?.token?.data?.token_id)+1))
+    // .then(response => console.log(response))
+    .then(response => {
+      const tempArray = response.result;
+      const newArray: any[] = [];
+      tempArray?.map((item: { token: { data: { token_id: any; }; }; }) => {
+        newArray.push(item?.token?.data.token_id);
+      })
+      const latest = Math.max(...newArray);
+      console.log(latest+1, latest)
+      setNewTokenId(latest+1);
+    })
     .catch(err => console.error(err));
 }
 
@@ -117,6 +142,7 @@ const GetTokenId = () =>{
   }, [])
 
   async function load(): Promise<void> {
+    
     setInventory(await client.getAssets({user: wallet, sell_orders: true}))
     GetTokenId()
   };
@@ -146,6 +172,10 @@ const GetTokenId = () =>{
     const max = 1000000000;
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+
+
+
 
   // the minting function should be on your backend
   async function mint() {
@@ -241,6 +271,16 @@ async function mintv2() {
     setInventory(await client.getAssets({user: wallet, sell_orders: true}))
   };
 
+  
+
+ 
+
+
+
+
+
+
+
   return (
     <div>
       <div>
@@ -290,6 +330,7 @@ async function mintv2() {
         <button onClick={sellNFT}>Sell</button>
       </div>
       <br/>
+      
       <div>
         Cancel sell order:
         <br/>
@@ -301,6 +342,27 @@ async function mintv2() {
       </div>
       <br/><br/><br/>
       <div>
+
+      <div>
+        Transfer NFT:
+        <br/>
+        <label>
+          Token ID:
+          <input type="text" value={transferTokenId} onChange={e => setTransferTokenId(e.target.value)} />
+        </label>
+        <br/>
+        <label>
+          Address:
+          <input type="text" value={transferTokenAddress} onChange={e => setTransferTokenAddress(e.target.value)} />
+        </label>
+        <label>
+          To Address:
+          <input type="text"  value={transferToAddress} onChange={e => setTransferToAddress(e.target.value)}/>
+        </label>
+        <button onClick={transferToken}>Send</button>
+      </div>
+      
+        
         Inventory:
         <button onClick={burntoken}>Burn token</button>
         {JSON.stringify(inventory.result)}
