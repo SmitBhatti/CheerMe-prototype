@@ -96,11 +96,11 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
   }
 
 const burntoken = async() => {
-    const link = new Link('https://link.ropsten.x.immutable.com');
+  const link = new Link('https://link.ropsten.x.immutable.com');
   await link.transfer([
     {
       type: ERC721TokenType.ERC721,
-      tokenId: "1",
+      tokenId: "53",
       tokenAddress: "0x3e75f5f6f7d87ed13b24f2a982e5fffd3ab92de2",
       toAddress: '0x0000000000000000000000000000000000000000',
     },
@@ -113,7 +113,7 @@ const transferToken = async() => {
   {
     type: ERC721TokenType.ERC721,
     tokenId: transferTokenId,
-    tokenAddress: transferTokenAddress,
+    tokenAddress: "0x3e75f5f6f7d87ed13b24f2a982e5fffd3ab92de2",
     toAddress: transferToAddress,
   },
   ]);
