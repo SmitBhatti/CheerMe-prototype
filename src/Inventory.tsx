@@ -45,6 +45,9 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
   const [transferTokenAddress, setTransferTokenAddress] = useState('');
   const [transferToAddress, setTransferToAddress] = useState('');
 
+  //Burn
+  const [burnTokenId, setBurnTokenId] = useState('');
+
   // buying and selling
   const [sellAmount, setSellAmount] = useState('');
   const [sellTokenId, setSellTokenId] = useState('');
@@ -102,7 +105,7 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
   await link.transfer([
     {
       type: ERC721TokenType.ERC721,
-      tokenId: "54",
+      tokenId: burnTokenId,
       tokenAddress: "0x3e75f5f6f7d87ed13b24f2a982e5fffd3ab92de2",
       toAddress: '0x0000000000000000000000000000000000000000',
     },
@@ -163,9 +166,7 @@ const GetTokenId = () =>{
     },
     ]);
   }
-  //transferTokenId
-  //transferTokenAddress
-  //transferToAddress 
+ 
 
   // the minting function should be on your backend
   async function mint() {
@@ -261,6 +262,7 @@ async function mintv2() {
     setInventory(await client.getAssets({user: wallet, sell_orders: true}))
   };
 
+  
   return (
     <div>
       <div>
@@ -270,26 +272,7 @@ async function mintv2() {
           Token ID:
           <input type="text" value={mintTokenId} onChange={e => setMintTokenId(e.target.value)} />
         </label>
-        <label>
-          Blueprint:
-          <input type="text" value={mintBlueprint} onChange={e => setMintBlueprint(e.target.value)} />
-        </label>
-        <button onClick={mint}>Mint</button>
-        <button onClick={GetTokenId}>GetTokenId</button>
-      </div>
-      <div>
-        MintV2 - with Royalties NFT:
-        <br/>
-        <label>
-          Token ID:
-          <input type="text" value={mintTokenIdv2} onChange={e => setMintTokenIdv2(e.target.value)} />
-        </label>
-        <label>
-          Blueprint:
-          <input type="text" value={mintBlueprintv2} onChange={e => setMintBlueprintv2(e.target.value)} />
-        </label>
-        <button onClick={mintv2}>MintV2</button>
-        <button onClick={customMint}>MintV3</button>
+        <button onClick={customMint}>Mint</button>
       </div>
       <br/>
       <div>
@@ -339,8 +322,16 @@ async function mintv2() {
         <button onClick={transferToken}>Send</button>
       </div>
       <div>
-        Inventory:
+      Burn token:
+        <br/>
+      <label>
+          Token ID:
+          <input type="text" value={burnTokenId} onChange={e => setBurnTokenId(e.target.value)} />
+        </label>
         <button onClick={burntoken}>Burn token</button>
+      </div>
+      <div>
+        Inventory:
         {JSON.stringify(inventory.result)}
         
       </div>
