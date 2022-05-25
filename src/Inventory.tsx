@@ -40,6 +40,11 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
   const [mintTokenIdv2, setMintTokenIdv2] = useState('');
   const [mintBlueprintv2, setMintBlueprintv2] = useState('');
 
+  //transfer
+  const [transferTokenId, setTransferTokenId] = useState('');
+  const [transferTokenAddress, setTransferTokenAddress] = useState('');
+  const [transferToAddress, setTransferToAddress] = useState('');
+
   // buying and selling
   const [sellAmount, setSellAmount] = useState('');
   const [sellTokenId, setSellTokenId] = useState('');
@@ -97,7 +102,7 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
   await link.transfer([
     {
       type: ERC721TokenType.ERC721,
-      tokenId: "1",
+      tokenId: "54",
       tokenAddress: "0x3e75f5f6f7d87ed13b24f2a982e5fffd3ab92de2",
       toAddress: '0x0000000000000000000000000000000000000000',
     },
@@ -146,6 +151,21 @@ const GetTokenId = () =>{
     const max = 1000000000;
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+  const transferToken = async() => {
+    const link = new Link('https://link.ropsten.x.immutable.com');
+    await link.transfer([
+    {
+      type: ERC721TokenType.ERC721,
+      tokenId:  transferTokenId,
+      tokenAddress: "0x3e75f5f6f7d87ed13b24f2a982e5fffd3ab92de2",
+      toAddress: transferToAddress,
+    },
+    ]);
+  }
+  //transferTokenId
+  //transferTokenAddress
+  //transferToAddress 
 
   // the minting function should be on your backend
   async function mint() {
@@ -300,6 +320,24 @@ async function mintv2() {
         <button onClick={cancelSell}>Cancel</button>
       </div>
       <br/><br/><br/>
+      <div>
+        Transfer NFT:
+        <br/>
+        <label>
+          Token ID:
+          <input type="text" value={transferTokenId} onChange={e => setTransferTokenId(e.target.value)} />
+        </label>
+        <br/>
+        <label>
+          Address:
+          <input type="text" value={transferTokenAddress} onChange={e => setTransferTokenAddress(e.target.value)} />
+        </label>
+        <label>
+          To Address:
+          <input type="text"  value={transferToAddress} onChange={e => setTransferToAddress(e.target.value)}/>
+        </label>
+        <button onClick={transferToken}>Send</button>
+      </div>
       <div>
         Inventory:
         <button onClick={burntoken}>Burn token</button>
