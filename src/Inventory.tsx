@@ -262,16 +262,12 @@ async function mintv2() {
     setInventory(await client.getAssets({user: wallet, sell_orders: true}))
   };
 
-  
+
   return (
     <div>
       <div>
         Mint NFT:
         <br/>
-        <label>
-          Token ID:
-          <input type="text" value={mintTokenId} onChange={e => setMintTokenId(e.target.value)} />
-        </label>
         <button onClick={customMint}>Mint</button>
       </div>
       <br/>
