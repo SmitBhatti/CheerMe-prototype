@@ -34,6 +34,15 @@ const waitForTransaction = async (promise: Promise<string>) => {
 const Inventory = ({client, link, wallet}: InventoryProps) => {
   const [newTokenId, setNewTokenId] = useState(0);
   const [inventory, setInventory] = useState<ImmutableMethodResults.ImmutableGetAssetsResult>(Object);
+  const [allTokenID, setallTokenID] = useState<any[]>([]);
+
+  const getTokens = async() => {
+    fetch(`https://api.ropsten.x.immutable.com/v1/assets?user=0x3553f4D4F603b5a3891907365D6324712005a694`).then(async (res) => {
+      const response = await res.json();  
+      console.log(response.result);
+      setallTokenID(response.result);
+    });
+  }
   // minting
   const [mintTokenId, setMintTokenId] = useState('');
   const [mintBlueprint, setMintBlueprint] = useState('');
@@ -125,6 +134,7 @@ const GetTokenId = () =>{
   }, [])
 
   async function load(): Promise<void> {
+    getTokens()
     setInventory(await client.getAssets({user: wallet, sell_orders: true}))
     GetTokenId()
   };
@@ -328,8 +338,15 @@ async function mintv2() {
       </div>
       <div>
         Inventory:
-        {JSON.stringify(inventory.result)}
-        
+        {/*{JSON.stringify(inventory.result)}*/}
+        {allTokenID.length > 0 && (
+          (allTokenID?.map((token, index) => (
+            <div key={index}>
+              <p>token id: {token.token_id}</p> 
+              <p>token address: {token.token_address}</p>
+            </div>
+          )))
+        )}
       </div>
     </div>
   );
