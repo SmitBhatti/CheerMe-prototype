@@ -278,7 +278,7 @@ async function mintv2() {
       <div>
         Mint NFT:
         <br/>
-        <button onClick={customMint}>Mint</button>
+        <button className = "button-28" onClick={customMint}>Mint</button>
       </div>
       <br/>
       <div>
@@ -296,7 +296,7 @@ async function mintv2() {
           Token Address:
           <input type="text" value={sellTokenAddress} onChange={e => setSellTokenAddress(e.target.value)} />
         </label>
-        <button onClick={sellNFT}>Sell</button>
+        <button className = "button-28" onClick={sellNFT}>Sell</button>
       </div>
       <br/>
       <div>
@@ -306,7 +306,7 @@ async function mintv2() {
           Order ID:
           <input type="text" value={sellCancelOrder} onChange={e => setSellCancelOrder(e.target.value)} />
         </label>
-        <button onClick={cancelSell}>Cancel</button>
+        <button className = "button-28" onClick={cancelSell}>Cancel</button>
       </div>
       <br/><br/><br/>
       <div>
@@ -325,7 +325,7 @@ async function mintv2() {
           To Address:
           <input type="text"  value={transferToAddress} onChange={e => setTransferToAddress(e.target.value)}/>
         </label>
-        <button onClick={transferToken}>Send</button>
+        <button className = "button-28" onClick={transferToken}>Send</button>
       </div>
       <div>
       Burn token:
@@ -334,7 +334,7 @@ async function mintv2() {
           Token ID:
           <input type="text" value={burnTokenId} onChange={e => setBurnTokenId(e.target.value)} />
         </label>
-        <button onClick={burntoken}>Burn token</button>
+        <button className = "button-28" onClick={burntoken}>Burn token</button>
       </div>
       <div>
         Inventory:
