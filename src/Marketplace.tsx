@@ -16,9 +16,10 @@ const Marketplace = ({client, link}: MarketplaceProps) => {
   }, [])
 
   async function load(): Promise<void> {
-    setMarketplace(await client.getOrders({status: ImmutableOrderStatus.active, user: '0xc120a52ad90bb926bafcdfc9161740dcf4a2cea1'}))
+    setMarketplace(await client.getOrders({status: ImmutableOrderStatus.active, user: '0xc120a52ad90bb926bafcdfc9161740dcf4a2cea1'}))   
   };
 
+  
   // buy an asset
   async function buyNFT() {
     await link.buy({
@@ -35,7 +36,7 @@ const Marketplace = ({client, link}: MarketplaceProps) => {
           Order ID:
           <input type="text" value={buyOrderId} onChange={e => setBuyOrderId(e.target.value)} />
         </label>
-        <button onClick={buyNFT}>Buy</button>
+        <button className="glow-on-hover" onClick={buyNFT}>Buy</button>
       </div>
       <br/><br/><br/>
       <div>

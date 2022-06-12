@@ -63,16 +63,22 @@ const App = () => {
 
   return (
     <div className="App">
-      <button onClick={linkSetup}>Setup</button>
+      <div className = "CheerMeHeader">
+        <h1> Welcome to CheerMe trading platform</h1>
+      </div>
+      <button className="glow-on-hover" type="button" onClick={linkSetup}>Setup your wallet</button>
       <div>
+        <br/>
         Active wallet: {wallet}
+        <br/><br/>
       </div>
       <div>
         ETH balance (in wei): {balance?.balance?.toString()}
+        <br/>
       </div>
-      <button onClick={() => setTab('marketplace')}>Marketplace</button>
-      <button onClick={() => setTab('inventory')}>Inventory</button>
-      <button onClick={() => setTab('bridging')}>Deposit and withdrawal</button>
+      <button className="button-28" type="button" onClick={() => setTab('marketplace')}>Marketplace</button><br/><br/>
+      <button className="button-28" type="button" onClick={() => setTab('inventory')}>My Inventory</button><br/><br/>
+      <button className="button-28" type="button" onClick={() => setTab('bridging')}>Deposit and withdrawal</button><br/><br/>
       <br/><br/><br/>
       {handleTabs()}
     </div>
