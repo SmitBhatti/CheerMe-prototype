@@ -35,7 +35,7 @@ const Marketplace = ({client, link}: MarketplaceProps) => {
           Order ID:
           <input type="text" value={buyOrderId} onChange={e => setBuyOrderId(e.target.value)} />
         </label>
-        <button onClick={buyNFT}>Buy</button>
+        <button className = "glow-on-hover" type = "button" onClick={buyNFT}>Buy</button>
       </div>
       <br/><br/><br/>
       <div>

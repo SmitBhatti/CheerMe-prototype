@@ -164,7 +164,12 @@ async function mintv2() {
           Blueprint:
           <input type="text" value={mintBlueprint} onChange={e => setMintBlueprint(e.target.value)} />
         </label>
+<<<<<<< Updated upstream
         <button onClick={mint}>Mint</button>
+=======
+        <button className = "button-28" type = "button" onClick={mint}>Mint</button>
+        <button className = "button-28" type = "button" onClick={GetTokenId}>GetTokenId</button>
+>>>>>>> Stashed changes
       </div>
       <div>
         MintV2 - with Royalties NFT:
@@ -177,7 +182,12 @@ async function mintv2() {
           Blueprint:
           <input type="text" value={mintBlueprintv2} onChange={e => setMintBlueprintv2(e.target.value)} />
         </label>
+<<<<<<< Updated upstream
         <button onClick={mintv2}>MintV2</button>
+=======
+        <button className = "button-28" type = "button" onClick={mintv2}>MintV2</button>
+        <button className = "button-28" type = "button" onClick={customMint}>MintV3</button>
+>>>>>>> Stashed changes
       </div>
       <br/>
       <div>
@@ -195,7 +205,7 @@ async function mintv2() {
           Token Address:
           <input type="text" value={sellTokenAddress} onChange={e => setSellTokenAddress(e.target.value)} />
         </label>
-        <button onClick={sellNFT}>Sell</button>
+        <button className = "button-28" type = "button" onClick={sellNFT}>Sell</button>
       </div>
       <br/>
       <div>
@@ -205,11 +215,15 @@ async function mintv2() {
           Order ID:
           <input type="text" value={sellCancelOrder} onChange={e => setSellCancelOrder(e.target.value)} />
         </label>
-        <button onClick={cancelSell}>Cancel</button>
+        <button className = "button-28" type = "button" onClick={cancelSell}>Cancel</button>
       </div>
       <br/><br/><br/>
       <div>
         Inventory:
+<<<<<<< Updated upstream
+=======
+        <button className = "button-28" type = "button" onClick={burntoken}>Burn token</button>
+>>>>>>> Stashed changes
         {JSON.stringify(inventory.result)}
       </div>
     </div>

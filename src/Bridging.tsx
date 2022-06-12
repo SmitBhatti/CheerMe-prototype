@@ -107,7 +107,7 @@ const Bridging = ({client, link, wallet}: BridgingProps) => {
             Amount (ETH):
             <input type="text" value={depositAmount} onChange={e => setDepositAmount(e.target.value)} />
           </label>
-          <button onClick={depositETH}>Deposit ETH</button>
+          <button className = "button-28" type = "button" onClick={depositETH}>Deposit ETH</button>
         </div>
         <br/><br/>
         <div>
@@ -117,13 +117,13 @@ const Bridging = ({client, link, wallet}: BridgingProps) => {
             Amount (ETH):
             <input type="text" value={prepareAmount} onChange={e => setPrepareAmount(e.target.value)} />
           </label>
-          <button onClick={prepareWithdrawalETH}>Prepare ETH Withdrawal</button>
+          <button className = "button-28" type = "button" onClick={prepareWithdrawalETH}>Prepare ETH Withdrawal</button>
         </div>
         <br/><br/>
         <div>
           Complete ETH withdrawal (withdraws entire eth balance that is ready for withdrawal to L1 wallet):
           <br/>
-          <button onClick={completeWithdrawalETH}>Complete ETH Withdrawal</button>
+          <button className = "button-28" type = "button" onClick={completeWithdrawalETH}>Complete ETH Withdrawal</button>
         </div>
       </div>
       <br/>
@@ -141,7 +141,7 @@ const Bridging = ({client, link, wallet}: BridgingProps) => {
             Token Address:
             <input type="text" value={depositTokenAddress} onChange={e => setDepositTokenAddress(e.target.value)} />
           </label>
-          <button onClick={depositNFT}>Deposit NFT</button>
+          <button className = "button-28" type = "button" onClick={depositNFT}>Deposit NFT</button>
         </div>
         <br/><br/>
         <div>
@@ -155,7 +155,7 @@ const Bridging = ({client, link, wallet}: BridgingProps) => {
             Token Address:
             <input type="text" value={prepareTokenAddress} onChange={e => setPrepareTokenAddress(e.target.value)} />
           </label>
-          <button onClick={prepareWithdrawalNFT}>Prepare NFT Withdrawal</button>
+          <button className = "button-28" type = "button" onClick={prepareWithdrawalNFT}>Prepare NFT Withdrawal</button>
         </div>
         <br/><br/>
         <div>
@@ -169,7 +169,7 @@ const Bridging = ({client, link, wallet}: BridgingProps) => {
             Token Address:
             <input type="text" value={completeTokenAddress} onChange={e => setCompleteTokenAddress(e.target.value)} />
           </label>
-          <button onClick={completeWithdrawalNFT}>Complete NFT Withdrawal</button>
+          <button className = "button-28" type = "button" onClick={completeWithdrawalNFT}>Complete NFT Withdrawal</button>
         </div>
       </div>
       <br/><br/><br/>
