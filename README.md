@@ -1,12 +1,13 @@
 # CheerMe App prototype using Immutable X
-This is a React app (prototype) for the purpose of providing code for building a marketplace on Immutable X:
+This is a React app (prototype) for the purpose of building a marketplace on Immutable X:
+- Connected to metamask
 - View sell orders and buying NFTs
 - View Immutable X inventory and ETH balance
 - Creating and cancelling sell orders
 - Minting on Immutable X
 - Depositing and withdrawing ETH and NFTs
 
-## Polling
+## Changes you need to make for your account
 
 
 ## Available Scripts
