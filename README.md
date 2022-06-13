@@ -1,4 +1,4 @@
-# Immutable X integration example
+# CheerMe App prototype using Immutable X
 This is a React app (prototype) for the purpose of providing code for building a marketplace on Immutable X:
 - View sell orders and buying NFTs
 - View Immutable X inventory and ETH balance
