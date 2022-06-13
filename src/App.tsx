@@ -8,11 +8,14 @@ require('dotenv').config();
 
 const App = () => {
   // initialise Immutable X Link SDK
-  const link = new Link(process.env.REACT_APP_ROPSTEN_LINK_URL)
+  const link = new Link('https://link.ropsten.x.immutable.com');
+  
+  
   
   // general
   const [tab, setTab] = useState('marketplace');
   const [wallet, setWallet] = useState('undefined');
+  
   const [balance, setBalance] = useState<ImmutableMethodResults.ImmutableGetBalanceResult>(Object);
   const [client, setClient] = useState<ImmutableXClient>(Object);
 
@@ -23,12 +26,14 @@ const App = () => {
 
   // initialise an Immutable X Client to interact with apis more easily
   async function buildIMX() {
-    const publicApiUrl: string = process.env.REACT_APP_ROPSTEN_ENV_URL ?? '';
+    
+    const publicApiUrl: string = 'https://api.ropsten.x.immutable.com/v1';
     setClient(await ImmutableXClient.build({publicApiUrl}))
   }
 
   // register and/or setup a user
   async function linkSetup(): Promise<void> {
+    const link = new Link('https://link.ropsten.x.immutable.com')
     const res = await link.setup({})
     setWallet(res.address)
     setBalance(await client.getBalance({user: res.address, tokenAddress: 'eth'}))

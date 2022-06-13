@@ -6,22 +6,26 @@ interface MarketplaceProps {
   client: ImmutableXClient,
   link: Link
 }
-
 const Marketplace = ({client, link}: MarketplaceProps) => {
-  const [marketplace, setMarketplace] = useState<ImmutableMethodResults.ImmutableGetOrdersResult>(Object);
-  const [buyOrderId, setBuyOrderId] = useState('');
+  
+  const [marketplace, setMarketplace] = useState<ImmutableMethodResults.ImmutableGetOrdersResult>(Object)
+  const [buyOrderId, setBuyOrderId] = useState('')
+  
+  
 
   useEffect(() => {
     load()
   }, [])
 
   async function load(): Promise<void> {
-    setMarketplace(await client.getOrders({status: ImmutableOrderStatus.active, user: '0xc120a52ad90bb926bafcdfc9161740dcf4a2cea1'}))   
+    const link = new Link('https://link.ropsten.x.immutable.com')
+    setMarketplace(await client.getOrders({status: ImmutableOrderStatus.active, user: '0x3553f4D4F603b5a3891907365D6324712005a694'}))   
   };
 
   
   // buy an asset
   async function buyNFT() {
+    const link = new Link('https://link.ropsten.x.immutable.com')
     await link.buy({
       orderIds:[buyOrderId]
     })

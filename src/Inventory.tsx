@@ -32,6 +32,7 @@ const waitForTransaction = async (promise: Promise<string>) => {
 
 
 const Inventory = ({client, link, wallet}: InventoryProps) => {
+  
   const [newTokenId, setNewTokenId] = useState(0);
   const [inventory, setInventory] = useState<ImmutableMethodResults.ImmutableGetAssetsResult>(Object);
   const [allTokenID, setallTokenID] = useState<any[]>([]);
@@ -63,7 +64,7 @@ const Inventory = ({client, link, wallet}: InventoryProps) => {
   const [sellTokenAddress, setSellTokenAddress] = useState('');
   const [sellCancelOrder, setSellCancelOrder] = useState('');
   const customMint = async()  => {
-    const mintToWallet = '0x4e4AeE29CdA60A41AaA897A86dA081B5e38E969B'; // eth wallet public address which will receive the token
+    const mintToWallet = '0x3553f4D4F603b5a3891907365D6324712005a694'; // eth wallet public address which will receive the token
     const signer = new Wallet("3a541ca594c3905b4ca7a25c84be74c1d9356f21c2e211995fd0604647e87ec2").connect(provider);
 
     const minter = await ImmutableXClient.build({
@@ -141,6 +142,7 @@ const GetTokenId = () =>{
 
   // sell an asset
   async function sellNFT() {
+    const link = new Link('https://link.ropsten.x.immutable.com')
     await link.sell({
       amount: sellAmount,
       tokenId: sellTokenId,
@@ -151,6 +153,7 @@ const GetTokenId = () =>{
 
   // cancel sell order
   async function cancelSell() {
+    const link = new Link('https://link.ropsten.x.immutable.com');
     await link.cancel({
       orderId: sellCancelOrder
     })
