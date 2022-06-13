@@ -7,9 +7,6 @@ This is a React app (prototype) for the purpose of building a marketplace on Imm
 - Minting on Immutable X
 - Depositing and withdrawing ETH and NFTs
 
-## Changes you need to make for your account
-
-
 ## Available Scripts
 
 In the project directory, you can run:
